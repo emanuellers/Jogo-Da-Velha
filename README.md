@@ -5,11 +5,20 @@
  3. O jogador pode configurar as cores e escolher a dificuldade das partidas;
 
 
+##Jogabilidade
 - [X] Adicionar funções do menu de configuração;
-- [ ] Adicionar mensagem de inicialização do jogo.
-- [ ] Criar funções do jogo.
+- [X] Criar funções de controle do Jogador.
 - [X] Matriz das jogadas.
-- [ ] Verificar se as linhas e colunas estão preenchidas.
-- [ ] Setar as fontes e padrão de cores do jogo.
+- [X] Verificar se as linhas e colunas estão preenchidas.
 - [ ] Criar sistema de pontuação.
+- [X] Criar lógica do "Robô"
+
+##Aparência
+- [ ] Setar as fontes e padrão de cores do jogo.
+- [ ] Adicionar mensagem de inicialização do jogo.
+
+##Configurações
+- [ ] Adicionar tema selecionada pelo jogador no frame do jogo.
+- [X] Adicionar personagem selecionado pelo jogador como seu avatar no jogo. 
+
 

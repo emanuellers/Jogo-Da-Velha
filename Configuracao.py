@@ -2,11 +2,6 @@ from tkinter import *
 from coresTamanhos import *
 import MenuInicial
 
-#configroot = Tk()
-#configroot.geometry("1000x1000")#276x330
-#configroot.configure(bg= "white")
-#configroot.title("JogoDaVelha")
-
 def configuracaoTela():
   global novaTela
   novaTela = Frame(bg=backgroundColor)
@@ -135,6 +130,7 @@ def getFormatoJogador():
     formatoEscolhido = "X"
   return formatoEscolhido
 
-
-
-#configroot.mainloop()
+def numPartidas():
+  global numPartidas
+  numPartidas = 0
+  return numPartidas

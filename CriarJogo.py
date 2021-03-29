@@ -3,14 +3,7 @@ import random
 from coresTamanhos import *
 from Configuracao import *
 from MenuInicial import *
-
-#matrizJogo = []
-#for i in range(0, getNivel()):
-        #lista = []
-        #for j in range(getNivel()):
-            #lista+=[(i,j)]
-        #matrizJogo +=[lista]
-#print(matrizJogo)
+from tkinter import messagebox
 
 def partidaJogo():
     
@@ -21,7 +14,7 @@ def partidaJogo():
     labelNivelEscolhido = Label(frameGeralJogo, text="Nível: %d" %getNivel(), bg=backgroundColor)
 
     global labelQtdaPartidas
-    labelQtdaPartidas = Label(frameGeralJogo, text= "Partidas: ", bg=backgroundColor)
+    labelQtdaPartidas = Label(frameGeralJogo, text= "Partidas: " , bg=backgroundColor)
 
     global frameJogoDaVelha
     frameJogoDaVelha = Frame(frameGeralJogo, bg=backgroundColor)
@@ -50,14 +43,13 @@ def frameJogo():
 def fecharFrameJogo():
     frameJogoDaVelha.grid_forget()
 
-
 def fecharPartidaJogo():
     frameGeralJogo.grid_forget()
 
 def sairDoJogo():
     fecharPartidaJogo()
     MenuInicial.criarMenuInicial(True)
-    
+
 
 def geraMatrizVisual():
     elementos = buttonsMatrizVisual()
@@ -86,8 +78,6 @@ def atualizaMatrizJogador(posX, posY):
     matrizJogo[posX][posY] = "0"
 
 
-
-
 def atualizaMatrizRobo(posX, posY):
     matrizJogo[posX][posY] = "1"
 
@@ -100,6 +90,7 @@ def matrizParaString():
                 matrizString = matrizString + "A"
             else:
                 matrizString = matrizString + valorStr
+    print(matrizString)
     return matrizString
 
 
@@ -111,7 +102,6 @@ def jogadaPlayer(elemento):
 def posicaoButtons(elemento):
    posX = elemento.grid_info()['row']
    posY = elemento.grid_info()['column']
-   a = elemento.grid_info()
    jogadaPlayer(elemento)
    atualizaMatrizJogador(posX, posY)
    jogadaRobo()
@@ -121,165 +111,374 @@ def posicaoButtons(elemento):
 
 def jogadaRobo():
     relacao = []
+    naoVazia = []
     for i in matrizJogo:
         opcao = []
         for j in range(len(i)):
             if i[j] != "1" and i[j] != "0":
                 opcao += [j]
-        if len(opcao) != 0:
-            relacao += [opcao]
+        relacao += [opcao]
 
 
     print(relacao)
-    escolhaLinha = random.randrange(len(relacao))
-    print("Escolha Linha: %d \n" %escolhaLinha)
-    escolhaColuna = random.choice(relacao[escolhaLinha]) 
-    print("Escolha Coluna: %d \n"%escolhaColuna)
+    if relacao == [[]* getNivel()]:
+        empate()
+    else:
+        naoVazia = []
+        for i in range(len(relacao)):
+            if relacao[i] != []:
+                naoVazia+=[i]
+        print("Não vazia: " + str(naoVazia))
+        if naoVazia == []:
+            empate()
+        escolhaLinha = random.choice(naoVazia)
+        print("Escolha Linha: %d \n" %escolhaLinha)
+        escolhaColuna = random.choice(relacao[escolhaLinha])
+        print("Escolha Coluna: %d \n"%escolhaColuna)
 
-    puloNivel = getNivel()
-    gridElemento = (puloNivel  * escolhaLinha) + escolhaColuna + 1
-    print("Grid Elemento: %d" %gridElemento)
-    buttonRoboJogada = listaGridJogo[gridElemento -1]
-    buttonRoboJogada.configure(text=robo)
-    buttonRoboJogada.configure(state=DISABLED)
-    atualizaMatrizRobo(escolhaLinha, escolhaColuna)
-    conferirResultado(matrizParaString(), getNivel())
+        puloNivel = getNivel()
+        gridElemento = (puloNivel  * escolhaLinha) + escolhaColuna + 1
+        print("Grid Elemento: %d" %gridElemento)
+        buttonRoboJogada = listaGridJogo[gridElemento -1]
+        buttonRoboJogada.configure(text=robo)
+        buttonRoboJogada.configure(state=DISABLED)
+        atualizaMatrizRobo(escolhaLinha, escolhaColuna)
+        conferirResultado(matrizParaString(), getNivel())
 
 
 def conferirResultado(matrizString, nivel):
     a = 0
     if nivel == 3:
-        diagonal = matrizString[0] + matrizString[4] + matrizString[8]
-
-        diagonalContraria = matrizString[2] + matrizString[4] + matrizString[6]
-
-        horizontalLinhaUm = matrizString[0] + matrizString[1] + matrizString[2]
-
-        horizontalLinhaDois = matrizString[3] + matrizString[4] + matrizString[5]
-
-        horizontalLinhaTres = matrizString[6] + matrizString[7] + matrizString[8]
-
-        verticalLinhaUm =  matrizString[0] + matrizString[3] + matrizString[6]
-
-        verticalLinhaDois = matrizString[1] + matrizString[4] + matrizString[7]
-
-        verticalLinhaTres = matrizString[2] + matrizString[5] + matrizString[8]
-
-        if diagonal == "000" or diagonal == "111":
-            fecharFrameJogo()
-        elif diagonalContraria == "000" or diagonalContraria == "111":
-            fecharFrameJogo()
-        elif horizontalLinhaUm == "000" or horizontalLinhaUm == "111":
-            fecharFrameJogo()
-        elif horizontalLinhaDois == "000" or horizontalLinhaDois == "111":
-            fecharFrameJogo()
-        elif horizontalLinhaTres == "000" or horizontalLinhaTres == "111":
-            fecharFrameJogo()
-        elif verticalLinhaUm == "000" or verticalLinhaUm == "111":
-            fecharFrameJogo()
-        elif verticalLinhaDois == "000" or verticalLinhaDois == "111":
-            fecharFrameJogo()
-        elif verticalLinhaTres == "000" or verticalLinhaTres == "111":
-            fecharFrameJogo()
-
-
+        conferirNivelTres(matrizString)
 
     elif nivel == 4:
-        diagonal = matrizString[0] + matrizString[5] + matrizString[10] + matrizString[15]
-
-        diagonalContraria = matrizString[3] + matrizString[6] + matrizString[9] + matrizString[12]
-
-        horizontalLinhaUm = matrizString[0] + matrizString[1] + matrizString[2] + matrizString[3]
-
-        horizontalLinhaDois = matrizString[4] + matrizString[5] + matrizString[6] + matrizString[7]
-
-        horizontalLinhaTres = matrizString[8] + matrizString[9] + matrizString[10] + matrizString[11]
-
-        horizontalLinhaQuatro = matrizString[12] + matrizString[13] + matrizString[14] + matrizString[15]
-
-        verticalLinhaUm = matrizString[0] + matrizString[4] + matrizString[8] + matrizString[12]
-
-        verticalLinhaDois = matrizString[1] + matrizString[5] + matrizString[9] + matrizString[13]
-
-        verticalLinhaTres = matrizString[2] + matrizString[6] + matrizString[10] + matrizString[14]
-
-        verticalLinhaQuatro = matrizString[3] + matrizString[7] + matrizString[11] + matrizString[15]
-
-        if diagonal == "0000" or diagonal == "1111":
-            fecharFrameJogo()
-        elif diagonalContraria == "0000" or diagonalContraria == "1111":
-            fecharFrameJogo()
-        elif horizontalLinhaUm == "0000" or horizontalLinhaUm == "1111":
-            fecharFrameJogo()
-        elif horizontalLinhaDois == "0000" or horizontalLinhaDois == "1111":
-            fecharFrameJogo()
-        elif horizontalLinhaTres == "0000" or horizontalLinhaTres == "1111":
-            fecharFrameJogo()
-        elif horizontalLinhaQuatro == "0000" or horizontalLinhaQuatro == "1111":
-            fecharFrameJogo()
-        elif verticalLinhaUm == "0000" or verticalLinhaUm == "1111":
-            fecharFrameJogo()
-        elif verticalLinhaDois == "0000" or verticalLinhaDois == "1111":
-            fecharFrameJogo()
-        elif verticalLinhaTres == "0000" or verticalLinhaTres == "1111":
-            fecharFrameJogo()
-        elif verticalLinhaQuatro == "0000" or verticalLinhaQuatro == "1111":
-            fecharFrameJogo()
-
+        conferirNivelQuatro(matrizString)
 
     elif nivel == 5:
-        diagonal = matrizString[0] + matrizString[6] + matrizString[12] + matrizString[18] + matrizString[24]
-
-        diagonalContraria = matrizString[4] + matrizString[8] + matrizString[12] + matrizString[16] + matrizString[20]
-
-        horizontalLinhaUm = matrizString[0] + matrizString[1] + matrizString[2] + matrizString[3] + matrizString[4]
-
-        horizontalLinhaDois = matrizString[5] + matrizString[6] + matrizString[7] + matrizString[8] + matrizString[9]
-
-        horizontalLinhaTres = matrizString[10] + matrizString[11] + matrizString[12] + matrizString[13] + matrizString[14]
-
-        horizontalLinhaQuatro = matrizString[15] + matrizString[16] + matrizString[17] + matrizString[18] + matrizString[19]
-
-        horizontalLinhaCinco = matrizString[20] + matrizString[21] + matrizString[22] + matrizString[23] + matrizString[24]
-
-        verticalLinhaUm = matrizString[0] + matrizString[5] + matrizString[10] + matrizString[15] + matrizString[20]
-
-        verticalLinhaDois = matrizString[1] + matrizString[6] + matrizString[11] + matrizString[16] + matrizString[21]
-
-        verticalLinhaTres = matrizString[2] + matrizString[7] + matrizString[12] + matrizString[17] + matrizString[22]
-
-        verticalLinhaQuatro = matrizString[3] + matrizString[8] + matrizString[13] + matrizString[18] + matrizString[23]
-
-        verticalLinhaCinco = matrizString[4] + matrizString[9] + matrizString[14] + matrizString[19] + matrizString[24]
-
-        if diagonal == "00000" or diagonal == "11111":
-            fecharFrameJogo()
-        elif diagonalContraria == "00000" or diagonalContraria == "11111":
-            fecharFrameJogo()
-        elif horizontalLinhaUm == "00000" or horizontalLinhaUm == "11111":
-            fecharFrameJogo()
-        elif horizontalLinhaDois == "00000" or horizontalLinhaDois == "11111":
-            fecharFrameJogo()
-        elif horizontalLinhaTres == "00000" or horizontalLinhaTres == "11111":
-            fecharFrameJogo()
-        elif horizontalLinhaQuatro == "00000" or horizontalLinhaQuatro == "11111":
-            fecharFrameJogo()
-        elif horizontalLinhaCinco == "00000" or horizontalLinhaCinco == "11111":
-            fecharFrameJogo()
-        elif verticalLinhaUm == "00000" or verticalLinhaUm == "11111":
-            fecharFrameJogo()
-        elif verticalLinhaDois == "00000" or verticalLinhaDois == "11111":
-            fecharFrameJogo()
-        elif verticalLinhaTres == "00000" or verticalLinhaTres == "11111":
-            fecharFrameJogo()
-        elif verticalLinhaQuatro == "00000" or verticalLinhaQuatro == "11111":
-            fecharFrameJogo()
-        elif verticalLinhaCinco == "00000" or verticalLinhaCinco == "11111":
-            fecharFrameJogo()
+        conferirNivelCinco(matrizString)
 
 
+def conferirNivelTres(matrizString):
 
-    
+    diagonal = matrizString[0] + matrizString[4] + matrizString[8]
+
+    diagonalContraria = matrizString[2] + matrizString[4] + matrizString[6]
+
+    horizontalLinhaUm = matrizString[0] + matrizString[1] + matrizString[2]
+
+    horizontalLinhaDois = matrizString[3] + matrizString[4] + matrizString[5]
+
+    horizontalLinhaTres = matrizString[6] + matrizString[7] + matrizString[8]
+
+    verticalLinhaUm = matrizString[0] + matrizString[3] + matrizString[6]
+
+    verticalLinhaDois = matrizString[1] + matrizString[4] + matrizString[7]
+
+    verticalLinhaTres = matrizString[2] + matrizString[5] + matrizString[8]
+
+    if diagonal == "000" or diagonal == "111":
+        fecharFrameJogo()
+        if diagonal == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        elif diagonal == "111":
+            print("Diagonal 111")
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+
+    elif diagonalContraria == "000" or diagonalContraria == "111":
+        fecharFrameJogo()
+        if diagonalContraria == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+
+    elif horizontalLinhaUm == "000" or horizontalLinhaUm == "111":
+        fecharFrameJogo()
+        if horizontalLinhaUm == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaDois == "000" or horizontalLinhaDois == "111":
+        fecharFrameJogo()
+        if horizontalLinhaDois == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaTres == "000" or horizontalLinhaTres == "111":
+        fecharFrameJogo()
+        if horizontalLinhaTres == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaUm == "000" or verticalLinhaUm == "111":
+        fecharFrameJogo()
+        if verticalLinhaUm == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaDois == "000" or verticalLinhaDois == "111":
+        fecharFrameJogo()
+        if verticalLinhaDois == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaTres == "000" or verticalLinhaTres == "111":
+        fecharFrameJogo()
+        if verticalLinhaTres == "000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+
+
+
+def conferirNivelQuatro(matrizString):
+
+    diagonal = matrizString[0] + matrizString[5] + matrizString[10] + matrizString[15]
+
+    diagonalContraria = matrizString[3] + matrizString[6] + matrizString[9] + matrizString[12]
+
+    horizontalLinhaUm = matrizString[0] + matrizString[1] + matrizString[2] + matrizString[3]
+
+    horizontalLinhaDois = matrizString[4] + matrizString[5] + matrizString[6] + matrizString[7]
+
+    horizontalLinhaTres = matrizString[8] + matrizString[9] + matrizString[10] + matrizString[11]
+
+    horizontalLinhaQuatro = matrizString[12] + matrizString[13] + matrizString[14] + matrizString[15]
+
+    verticalLinhaUm = matrizString[0] + matrizString[4] + matrizString[8] + matrizString[12]
+
+    verticalLinhaDois = matrizString[1] + matrizString[5] + matrizString[9] + matrizString[13]
+
+    verticalLinhaTres = matrizString[2] + matrizString[6] + matrizString[10] + matrizString[14]
+
+    verticalLinhaQuatro = matrizString[3] + matrizString[7] + matrizString[11] + matrizString[15]
+
+    if diagonal == "0000" or diagonal == "1111":
+        fecharFrameJogo()
+        if diagonal == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif diagonalContraria == "0000" or diagonalContraria == "1111":
+        fecharFrameJogo()
+        if diagonalContraria == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+
+    elif horizontalLinhaUm == "0000" or horizontalLinhaUm == "1111":
+        fecharFrameJogo()
+        if horizontalLinhaUm == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaDois == "0000" or horizontalLinhaDois == "1111":
+        fecharFrameJogo()
+        if horizontalLinhaDois == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaTres == "0000" or horizontalLinhaTres == "1111":
+        fecharFrameJogo()
+        if horizontalLinhaTres == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaQuatro == "0000" or horizontalLinhaQuatro == "1111":
+        fecharFrameJogo()
+        if horizontalLinhaQuatro == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaUm == "0000" or verticalLinhaUm == "1111":
+        fecharFrameJogo()
+        if verticalLinhaUm == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaDois == "0000" or verticalLinhaDois == "1111":
+        fecharFrameJogo()
+        if verticalLinhaDois == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaTres == "0000" or verticalLinhaTres == "1111":
+        fecharFrameJogo()
+        if verticalLinhaTres == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaQuatro == "0000" or verticalLinhaQuatro == "1111":
+        fecharFrameJogo()
+        if verticalLinhaQuatro == "0000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+
+
+def conferirNivelCinco(matrizString):
+
+    diagonal = matrizString[0] + matrizString[6] + matrizString[12] + matrizString[18] + matrizString[24]
+
+    diagonalContraria = matrizString[4] + matrizString[8] + matrizString[12] + matrizString[16] + matrizString[20]
+
+    horizontalLinhaUm = matrizString[0] + matrizString[1] + matrizString[2] + matrizString[3] + matrizString[4]
+
+    horizontalLinhaDois = matrizString[5] + matrizString[6] + matrizString[7] + matrizString[8] + matrizString[9]
+
+    horizontalLinhaTres = matrizString[10] + matrizString[11] + matrizString[12] + matrizString[13] + matrizString[14]
+
+    horizontalLinhaQuatro = matrizString[15] + matrizString[16] + matrizString[17] + matrizString[18] + matrizString[19]
+
+    horizontalLinhaCinco = matrizString[20] + matrizString[21] + matrizString[22] + matrizString[23] + matrizString[24]
+
+    verticalLinhaUm = matrizString[0] + matrizString[5] + matrizString[10] + matrizString[15] + matrizString[20]
+
+    verticalLinhaDois = matrizString[1] + matrizString[6] + matrizString[11] + matrizString[16] + matrizString[21]
+
+    verticalLinhaTres = matrizString[2] + matrizString[7] + matrizString[12] + matrizString[17] + matrizString[22]
+
+    verticalLinhaQuatro = matrizString[3] + matrizString[8] + matrizString[13] + matrizString[18] + matrizString[23]
+
+    verticalLinhaCinco = matrizString[4] + matrizString[9] + matrizString[14] + matrizString[19] + matrizString[24]
+
+    if diagonal == "00000" or diagonal == "11111":
+        fecharFrameJogo()
+        if diagonal == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif diagonalContraria == "00000" or diagonalContraria == "11111":
+        fecharFrameJogo()
+        if diagonalContraria == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaUm == "00000" or horizontalLinhaUm == "11111":
+        fecharFrameJogo()
+        if diagonal == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaDois == "00000" or horizontalLinhaDois == "11111":
+        fecharFrameJogo()
+        if horizontalLinhaDois == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaTres == "00000" or horizontalLinhaTres == "11111":
+        fecharFrameJogo()
+        if horizontalLinhaTres == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaQuatro == "00000" or horizontalLinhaQuatro == "11111":
+        fecharFrameJogo()
+        if horizontalLinhaQuatro == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif horizontalLinhaCinco == "00000" or horizontalLinhaCinco == "11111":
+        fecharFrameJogo()
+        if horizontalLinhaCinco == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaUm == "00000" or verticalLinhaUm == "11111":
+        fecharFrameJogo()
+        if verticalLinhaUm == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaDois == "00000" or verticalLinhaDois == "11111":
+        fecharFrameJogo()
+        if verticalLinhaDois == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaTres == "00000" or verticalLinhaTres == "11111":
+        fecharFrameJogo()
+        if verticalLinhaTres == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaQuatro == "00000" or verticalLinhaQuatro == "11111":
+        fecharFrameJogo()
+        if verticalLinhaQuatro == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+    elif verticalLinhaCinco == "00000" or verticalLinhaCinco == "11111":
+        fecharFrameJogo()
+        if verticalLinhaCinco == "00000":
+            messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            frameJogo()
+        else:
+            messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
+            frameJogo()
+
+def empate():
+    fecharFrameJogo()
+    messagebox.showinfo("Empate", "Você e o Robô empataram! O.o")
+    frameJogo()
+
 
 def buttonsMatrizVisual():
     gridJogo1 = Button(frameJogoDaVelha, text="1", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo1))

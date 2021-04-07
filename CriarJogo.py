@@ -1,9 +1,9 @@
-from tkinter import *
 import random
-from coresTamanhos import *
+import coresTamanhos
+from tkinter import messagebox
 from Configuracao import *
 from MenuInicial import *
-from tkinter import messagebox
+
 
 def partidaJogo():
     
@@ -20,7 +20,7 @@ def partidaJogo():
     frameJogoDaVelha = Frame(frameGeralJogo, bg=backgroundColor)
 
     global labelPontuacao
-    labelPontuacao = Label(frameGeralJogo, text="Pontuação", bg=backgroundColor)
+    labelPontuacao = Label(frameGeralJogo, text="Pontuação: ", bg=backgroundColor)
 
     global buttonVoltar
     buttonVoltar = Button(frameGeralJogo, text="Sair", bg=backgroundColor, command=sairDoJogo)
@@ -39,6 +39,7 @@ def frameJogo():
     frameJogoDaVelha.grid(row=1, column=0, columnspan=3, pady=30, padx=20)
     geraMatrizVisual()
     geraMatriz()
+    numPartidas()
 
 def fecharFrameJogo():
     frameJogoDaVelha.grid_forget()
@@ -49,6 +50,14 @@ def fecharPartidaJogo():
 def sairDoJogo():
     fecharPartidaJogo()
     MenuInicial.criarMenuInicial(True)
+
+def numPartidas():
+    coresTamanhos.partidas += 1
+    labelQtdaPartidas.configure(text= "Partida: " + str(coresTamanhos.partidas))
+
+def numPontuacao():
+    coresTamanhos.pontuacao+= getNivel()
+    labelPontuacao.configure(text="Pontuacao: " + str(coresTamanhos.pontuacao))
 
 
 def geraMatrizVisual():
@@ -180,6 +189,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if diagonal == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         elif diagonal == "111":
             print("Diagonal 111")
@@ -190,6 +200,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if diagonalContraria == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -199,6 +210,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if horizontalLinhaUm == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -207,6 +219,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if horizontalLinhaDois == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -215,6 +228,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if horizontalLinhaTres == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -223,6 +237,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if verticalLinhaUm == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -231,6 +246,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if verticalLinhaDois == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -239,6 +255,7 @@ def conferirNivelTres(matrizString):
         fecharFrameJogo()
         if verticalLinhaTres == "000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -272,6 +289,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if diagonal == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -280,6 +298,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if diagonalContraria == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -289,6 +308,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if horizontalLinhaUm == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -297,6 +317,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if horizontalLinhaDois == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -305,6 +326,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if horizontalLinhaTres == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -313,6 +335,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if horizontalLinhaQuatro == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -321,6 +344,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if verticalLinhaUm == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -329,6 +353,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if verticalLinhaDois == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -337,6 +362,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if verticalLinhaTres == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -345,6 +371,7 @@ def conferirNivelQuatro(matrizString):
         fecharFrameJogo()
         if verticalLinhaQuatro == "0000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -381,6 +408,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if diagonal == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -389,6 +417,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if diagonalContraria == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -397,6 +426,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if diagonal == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -405,6 +435,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if horizontalLinhaDois == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -413,6 +444,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if horizontalLinhaTres == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -421,6 +453,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if horizontalLinhaQuatro == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -429,6 +462,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if horizontalLinhaCinco == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -437,6 +471,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if verticalLinhaUm == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -445,6 +480,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if verticalLinhaDois == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -453,6 +489,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if verticalLinhaTres == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -461,6 +498,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if verticalLinhaQuatro == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -469,6 +507,7 @@ def conferirNivelCinco(matrizString):
         fecharFrameJogo()
         if verticalLinhaCinco == "00000":
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
+            numPontuacao()
             frameJogo()
         else:
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")

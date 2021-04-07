@@ -10,7 +10,7 @@
 - [X] Criar funções de controle do Jogador.
 - [X] Matriz das jogadas.
 - [X] Verificar se as linhas e colunas estão preenchidas.
-- [ ] Criar sistema de pontuação.
+- [X] Criar sistema de pontuação.
 - [X] Criar lógica do "Robô"
 
 ## Aparência

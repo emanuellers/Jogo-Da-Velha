@@ -1,5 +1,6 @@
 backgroundColor = "white"
 fontLabels = "Lohit Tamil"
+fontPressStart = "Press Start 2P Regular"
 corTema = [["Diurno", "#82ABA1", "#e8aeb7"], ["Outono", "#e76f51", "#264653"] , ["Escuro","black", "#fca311"]]
 highlightButtonCores = "#93ff96"
 
@@ -34,3 +35,7 @@ urso = "ʕ•́ᴥ•̀ʔ"
 feliz = "(◠‿◠) "
 coracao = "♡"
 gatinho = "≧◠‿◠≦"
+
+
+partidas = 0
+pontuacao = 0

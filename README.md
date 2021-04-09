@@ -4,6 +4,9 @@
  2. Existem três níveis de dificuldade, 3x3, 4x4 e 5x5;
  3. O jogador pode configurar as cores e escolher a dificuldade das partidas;
 
+![](/Preview-Jogo-da-Velha.gif)
+
+
 
 ## Jogabilidade
 - [X] Adicionar funções do menu de configuração;

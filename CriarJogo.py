@@ -24,7 +24,7 @@ def partidaJogo():
     labelPontuacao = Label(frameGeralJogo, text="Pontuação:\nJogador: 0\nRobô: 0", bg=backgroundColor, font=(fontPressStart, 10), fg=titulosPartidas)
 
     global alterarConfiguracoes
-    alterarConfiguracoes = Button(frameGeralJogo, text="Config.", bg="#f1faee", command=lambda:criarMenuConfiguracoes(True), width = widthButtonPagCriarJogo, height = heighButtonPagCriarJogo, border = 0, font=(fontPressStart, 10), fg="#1d3557")
+    alterarConfiguracoes = Button(frameGeralJogo, text="Config.", bg="#f1faee", command=lambda:(fecharPartidaJogo(),criarMenuConfiguracoes(True)), width = widthButtonPagCriarJogo, height = heighButtonPagCriarJogo, border = 0, font=(fontPressStart, 10), fg="#1d3557")
 
     global buttonVoltar
     buttonVoltar = Button(frameGeralJogo, text="Sair", bg="#f1faee", command=sairDoJogo, width = widthButtonPagCriarJogo, height = heighButtonPagCriarJogo, border =0, font=(fontPressStart, 10), fg=botaoSairCor)
@@ -132,7 +132,7 @@ def posicaoButtons(elemento):
        jogadaRobo()
    else:
        if conferirResultado(matrizParaString(), getNivel()) == True:
-           print(conferirResultado(matrizParaString(), getNivel()))
+           conferirResultado(matrizParaString(), getNivel())
        else:
            empate()
 

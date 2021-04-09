@@ -1,8 +1,8 @@
 # Jogo da Velha Python Tkinter
  Jogo da velha em Python 3 com GUI Tkinter em três níves de dificuldade.
- 1. O jogador disputa partidas contra a máquina;
- 2. Existem três níveis de dificuldade, 3x3, 4x4 e 5x5;
- 3. O jogador pode configurar as cores e escolher a dificuldade das partidas;
+ - O jogador disputa partidas contra a máquina;
+ - Existem três níveis de dificuldade, 3x3, 4x4 e 5x5;
+ - O jogador pode configurar as cores e escolher a dificuldade das partidas;
 
 
 ## Jogabilidade
@@ -14,11 +14,11 @@
 - [X] Criar lógica do "Robô"
 
 ## Aparência
-- [ ] Setar as fontes e padrão de cores do jogo.
-- [ ] Adicionar mensagem de inicialização do jogo.
+- [X] Setar as fontes e padrão de cores do jogo.
+- [X] Adicionar mensagem de inicialização do jogo.
 
 ## Configurações
-- [ ] Adicionar tema selecionada pelo jogador no frame do jogo.
+- [X] Adicionar tema selecionada pelo jogador no frame do jogo.
 - [X] Adicionar personagem selecionado pelo jogador como seu avatar no jogo. 
 
 

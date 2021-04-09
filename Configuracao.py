@@ -7,23 +7,23 @@ def configuracaoTela():
   novaTela = Frame(bg=backgroundColor)
 
   global labelConfiguracao
-  labelConfiguracao = Label(novaTela,text="PERSONALIZAR", bg= backgroundColor, pady=padYItens, font=(fontPressStart, 15))
+  labelConfiguracao = Label(novaTela,text="PERSONALIZAR", bg= backgroundColor, pady=padYItens, font=(fontPressStart, 15), fg=jogoNomeCor)
 
   global labelDificuldade
-  labelDificuldade = Label(novaTela, text="NÍVEIS", bg=backgroundColor, pady=padYItens, font=(fontPressStart, 10))
+  labelDificuldade = Label(novaTela, text="NÍVEIS", bg=backgroundColor, pady=padYItens, font=(fontPressStart, 10), fg= jogoNomeCor)
 
   global labelTemas
-  labelTemas = Label(novaTela, text="TEMAS", bg =backgroundColor , pady=padYItens, font=(fontPressStart, 10))
+  labelTemas = Label(novaTela, text="TEMAS", bg =backgroundColor , pady=padYItens, font=(fontPressStart, 10), fg= jogoNomeCor)
 
   global labelFormato
-  labelFormato = Label(novaTela, text="FORMATO", bg=backgroundColor, pady=padYItens, font=(fontPressStart, 10))
+  labelFormato = Label(novaTela, text="FORMATO", bg=backgroundColor, pady=padYItens, font=(fontPressStart, 10), fg=jogoNomeCor)
       
   global labelFormatoRobo
-  labelFormatoRobo = Label(novaTela, text="Formato Robô: %s" %robo, bg= backgroundColor, pady=padYItens, font=(fontTexto1, 11))
+  labelFormatoRobo = Label(novaTela, text="Formato Robô: %s" %robo, bg= backgroundColor, pady=padYItens, font=(fontPressStart, 6), fg=jogoNomeCor)
       
 
   global salvarConfiguracoes
-  salvarConfiguracoes = Button(novaTela, text="Salvar", pady=padYItens, bg= backgroundColor, width=widthSalvarConfiguracoes, border = 0, command=lambda:getConfiguracoes(), font=(fontTexto1, 15))
+  salvarConfiguracoes = Button(novaTela, text="Salvar", pady=padYItens, bg= backgroundColor, width=widthSalvarConfiguracoes, border = 0, command=lambda:getConfiguracoes(), font=(fontPressStart, 10))
     
 
 
@@ -50,9 +50,9 @@ def fecharMenuConfiguracoes(boolean):
 def definirNivel():
   global nivel 
   nivel = IntVar(None, 3)
-  nivelDificuldade1 = Radiobutton(novaTela,text="3x3", value=3, variable=nivel, bg=backgroundColor, width=widthNiveis, font=(fontTexto1, 15))
-  nivelDificuldade2 = Radiobutton(novaTela,text="4x4", value=4, variable=nivel, bg=backgroundColor, width=widthNiveis, font=(fontTexto1, 15))
-  nivelDificuldade3 = Radiobutton(novaTela, text="5x5", value=5,variable=nivel, bg=backgroundColor, width=widthNiveis, font=(fontTexto1, 15))
+  nivelDificuldade1 = Radiobutton(novaTela,text="3x3", value=3, variable=nivel, bg=backgroundColor, width=widthNiveis, font=(fontTexto1, 15), fg=titulosPartidas)
+  nivelDificuldade2 = Radiobutton(novaTela,text="4x4", value=4, variable=nivel, bg=backgroundColor, width=widthNiveis, font=(fontTexto1, 15), fg=titulosPartidas)
+  nivelDificuldade3 = Radiobutton(novaTela, text="5x5", value=5,variable=nivel, bg=backgroundColor, width=widthNiveis, font=(fontTexto1, 15), fg=titulosPartidas)
   
   nivelDificuldade1.grid(row=3, column=0)
   nivelDificuldade2.grid(row=3, column=1)
@@ -74,13 +74,13 @@ def alertaTema():
 
 def definirSeuFormato():
   global formato
-  formato = StringVar(None, "X")
-  forma1 = Radiobutton(novaTela, text=xis, value=xis, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10))
-  forma2 = Radiobutton(novaTela, text=oo, value=oo, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10))
-  forma3 = Radiobutton(novaTela, text=olhosFechados, value=olhosFechados,variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10))
-  forma4 = Radiobutton(novaTela, text=urso, value=urso, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10))
-  forma5 = Radiobutton(novaTela, text=feliz, value=feliz, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10))
-  forma6 = Radiobutton(novaTela, text=gatinho, value=gatinho,variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10))
+  formato = StringVar(None, feliz)
+  forma1 = Radiobutton(novaTela, text=xis, value=xis, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10), fg=titulosPartidas)
+  forma2 = Radiobutton(novaTela, text=oo, value=oo, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10), fg=titulosPartidas)
+  forma3 = Radiobutton(novaTela, text=olhosFechados, value=olhosFechados,variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10), fg=titulosPartidas)
+  forma4 = Radiobutton(novaTela, text=urso, value=urso, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10), fg=titulosPartidas)
+  forma5 = Radiobutton(novaTela, text=feliz, value=feliz, variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10), fg=titulosPartidas)
+  forma6 = Radiobutton(novaTela, text=gatinho, value=gatinho,variable=formato, bg=backgroundColor, width=widthFormato, font=(fontTexto1, 10), fg=titulosPartidas)
   
 
   forma1.grid(row=7, column=0)
@@ -110,6 +110,15 @@ def getCoresButton(corTemaValor):
   temaCores = corTema[corTemaValor]
   return temaCores
 
+def getCores():
+  try:
+    temaCores
+  except:
+    getTemaCores = corTema[0]
+  else:
+    getTemaCores = temaCores
+  return getTemaCores
+
 def getNivel():
   try:
     nivel.get()
@@ -124,7 +133,7 @@ def getFormatoJogador():
     formato.get()
     formatoEscolhido = formato.get()
   except:
-    formatoEscolhido = "X"
+    formatoEscolhido = feliz
   return formatoEscolhido
 
 def numPartidas():

@@ -1,5 +1,3 @@
-from tkinter import *
-from coresTamanhos import *
 from MenuInicial import *
 from Configuracao import *
 
@@ -19,7 +17,7 @@ class Aba:
         
         
 root = Tk()
-root.geometry("600x590")#276x330
+root.geometry("580x450")#276x330
 root.configure(bg= backgroundColor)
 root.title("JogoDaVelha")
 root.resizable(width= False, height=False)

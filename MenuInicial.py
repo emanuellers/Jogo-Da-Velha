@@ -2,7 +2,7 @@ from tkinter import *
 from coresTamanhos import *
 import sys
 sys.path.append ('/TestandoModulos/')
-import Configuracao
+from Configuracao import *
 sys.path.append('/TestandoModulos/CriarJogo')
 import CriarJogo
 
@@ -37,7 +37,7 @@ def fecharMenuInicial():
 
 def personalizar():
     fecharMenuInicial()
-    Configuracao.criarMenuConfiguracoes(True)
+    criarMenuConfiguracoes(True)
     
 def comecar():
     fecharMenuInicial()

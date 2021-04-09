@@ -3,6 +3,7 @@ import coresTamanhos
 from tkinter import messagebox
 from Configuracao import *
 from MenuInicial import *
+import threading
 
 
 def partidaJogo():
@@ -11,10 +12,10 @@ def partidaJogo():
     frameGeralJogo = Frame(bg=backgroundColor)
     
     global labelNivelEscolhido
-    labelNivelEscolhido = Label(frameGeralJogo, text="Nível: %d" %getNivel(), bg=backgroundColor)
+    labelNivelEscolhido = Label(frameGeralJogo, text="Nível: %d" %getNivel(), bg="Blue", width = widthLabelCriarJogo, height = heighLabelCriarJogo)
 
     global labelQtdaPartidas
-    labelQtdaPartidas = Label(frameGeralJogo, text= "Partidas: " , bg=backgroundColor)
+    labelQtdaPartidas = Label(frameGeralJogo, text= "Partidas: " , bg="yellow", width = widthLabelCriarJogo, height = heighLabelCriarJogo)
 
     global frameJogoDaVelha
     frameJogoDaVelha = Frame(frameGeralJogo, bg=backgroundColor)
@@ -22,21 +23,25 @@ def partidaJogo():
     global labelPontuacao
     labelPontuacao = Label(frameGeralJogo, text="Pontuação: ", bg=backgroundColor)
 
+    global alterarConfiguracoes
+    alterarConfiguracoes = Button(frameGeralJogo, text="Config.", bg=backgroundColor, command=criarMenuConfiguracoes)
+
     global buttonVoltar
     buttonVoltar = Button(frameGeralJogo, text="Sair", bg=backgroundColor, command=sairDoJogo)
 
 
 def criarPartidaJogo():
     partidaJogo()
-    frameGeralJogo.grid(row=0, column=0, pady= 30, padx=20)
-    labelNivelEscolhido.grid(row=0, column= 0, pady= 30, padx=20)
-    labelQtdaPartidas.grid(row=0, column=1, pady= 30, padx=20)
+    frameGeralJogo.grid(row=0, column=0)
+    labelNivelEscolhido.grid(row=0, column= 0)
+    labelQtdaPartidas.grid(row=0, column=1)
     frameJogo()
-    labelPontuacao.grid(row=frameJogoMaisUm, column=0, pady= 30, padx=20)
-    buttonVoltar.grid(row=frameJogoMaisUm, column=3, pady= 30, padx=20)
+    labelPontuacao.grid(row=frameJogoMaisUm, column=0)
+    alterarConfiguracoes.grid(row= frameJogoMaisUm, column=1)
+    buttonVoltar.grid(row=frameJogoMaisUm + 1, column=1)
 
 def frameJogo():
-    frameJogoDaVelha.grid(row=1, column=0, columnspan=3, pady=30, padx=20)
+    frameJogoDaVelha.grid(row=1, column=0, columnspan=5)
     geraMatrizVisual()
     geraMatriz()
     numPartidas()
@@ -191,6 +196,7 @@ def conferirNivelTres(matrizString):
             messagebox.showinfo("Vencedor", "Você Venceu o Robô! :)")
             numPontuacao()
             frameJogo()
+
         elif diagonal == "111":
             print("Diagonal 111")
             messagebox.showinfo("Vencedor", "O Robô foi mais esperto! :(")
@@ -519,32 +525,65 @@ def empate():
     frameJogo()
 
 
+def criarFrameJogadorVenceu():
+    global frameJogadorVenceu
+    frameJogadorVenceu = Frame(frameGeralJogo)
+    labelJogadorVenceu = Label(frameJogadorVenceu, text="Você derrotou o robô!\n ᕙ(`▿´)ᕗ")
+    frameJogadorVenceu.grid(row=1, column=0, columnspan=5)
+    labelJogadorVenceu.grid(row=1, column =0, columnspan = 5)
+
+
+def fecharFrameJogadorVenceu():
+    frameJogadorVenceu.grid_forget()
+
+
+def criarFrameRoboVenceu():
+    global frameRoboVenceu
+    frameRoboVenceu = Frame(frameGeralJogo, text="Nãããooo! O Robô foi mais esperto!\n \t\tq|o,_,o|p")
+    frameRoboVenceu.grid(row=1, column=0, columnspan=5)
+
+
+def fecharFrameRoboVenceu():
+    frameRoboVenceu.grid_forget()
+
+
+
 def buttonsMatrizVisual():
-    gridJogo1 = Button(frameJogoDaVelha, text="1", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo1))
-    gridJogo2 = Button(frameJogoDaVelha, text="2", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo2))
-    gridJogo3 = Button(frameJogoDaVelha, text="3", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo3))
-    gridJogo4 = Button(frameJogoDaVelha, text="4", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo4))
-    gridJogo5 = Button(frameJogoDaVelha, text="5", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo5))
-    gridJogo6 = Button(frameJogoDaVelha, text="6", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo6))
-    gridJogo7 = Button(frameJogoDaVelha, text="7", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo7))
-    gridJogo8 = Button(frameJogoDaVelha, text="8", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo8))
-    gridJogo9 = Button(frameJogoDaVelha, text="9", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo9))
-    gridJogo10 = Button(frameJogoDaVelha, text="10", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo10))
-    gridJogo11 = Button(frameJogoDaVelha, text="11", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo11))
-    gridJogo12 = Button(frameJogoDaVelha, text="12", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo12))
-    gridJogo13 = Button(frameJogoDaVelha, text="13", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo13))
-    gridJogo14 = Button(frameJogoDaVelha, text="14", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo14))
-    gridJogo15 = Button(frameJogoDaVelha, text="15", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo15))
-    gridJogo16 = Button(frameJogoDaVelha, text="16", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo16))
-    gridJogo17 = Button(frameJogoDaVelha, text="17", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo17))
-    gridJogo18 = Button(frameJogoDaVelha, text="18", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo18))
-    gridJogo19 = Button(frameJogoDaVelha, text="19", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo19))
-    gridJogo20 = Button(frameJogoDaVelha, text="20", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo20))
-    gridJogo21 = Button(frameJogoDaVelha, text="21", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo21))
-    gridJogo22 = Button(frameJogoDaVelha, text="22", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo22))
-    gridJogo23 = Button(frameJogoDaVelha, text="23", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo23))
-    gridJogo24 = Button(frameJogoDaVelha, text="24", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo24))
-    gridJogo25 = Button(frameJogoDaVelha, text="25", width=widthPartidaButtons_3, height=heightPartidaButtons_3, command=lambda: posicaoButtons(gridJogo25))
+    if getNivel() == 3:
+        widthP = widthPartidaButtons_3 *5
+        heightP = heightPartidaButtons_3*5
+    elif getNivel() == 4:
+        widthP = widthPartidaButtons_3 * 4
+        heightP = heightPartidaButtons_3 * 4
+    else:
+        widthP = widthPartidaButtons_3 * 3
+        heightP = heightPartidaButtons_3* 3
+
+    gridJogo1 = Button(frameJogoDaVelha, text="1", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo1))
+    gridJogo2 = Button(frameJogoDaVelha, text="2", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo2))
+    gridJogo3 = Button(frameJogoDaVelha, text="3", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo3))
+    gridJogo4 = Button(frameJogoDaVelha, text="4", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo4))
+    gridJogo5 = Button(frameJogoDaVelha, text="5", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo5))
+    gridJogo6 = Button(frameJogoDaVelha, text="6", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo6))
+    gridJogo7 = Button(frameJogoDaVelha, text="7", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo7))
+    gridJogo8 = Button(frameJogoDaVelha, text="8", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo8))
+    gridJogo9 = Button(frameJogoDaVelha, text="9", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo9))
+    gridJogo10 = Button(frameJogoDaVelha, text="10", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo10))
+    gridJogo11 = Button(frameJogoDaVelha, text="11", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo11))
+    gridJogo12 = Button(frameJogoDaVelha, text="12", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo12))
+    gridJogo13 = Button(frameJogoDaVelha, text="13", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo13))
+    gridJogo14 = Button(frameJogoDaVelha, text="14", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo14))
+    gridJogo15 = Button(frameJogoDaVelha, text="15", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo15))
+    gridJogo16 = Button(frameJogoDaVelha, text="16", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo16))
+    gridJogo17 = Button(frameJogoDaVelha, text="17", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo17))
+    gridJogo18 = Button(frameJogoDaVelha, text="18", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo18))
+    gridJogo19 = Button(frameJogoDaVelha, text="19", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo19))
+    gridJogo20 = Button(frameJogoDaVelha, text="20", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo20))
+    gridJogo21 = Button(frameJogoDaVelha, text="21", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo21))
+    gridJogo22 = Button(frameJogoDaVelha, text="22", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo22))
+    gridJogo23 = Button(frameJogoDaVelha, text="23", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo23))
+    gridJogo24 = Button(frameJogoDaVelha, text="24", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo24))
+    gridJogo25 = Button(frameJogoDaVelha, text="25", width=widthP, height=heightP, command=lambda: posicaoButtons(gridJogo25))
     global listaGridJogo
     listaGridJogo = [gridJogo1, gridJogo2, gridJogo3, gridJogo4, gridJogo5, gridJogo6, gridJogo7, gridJogo8, gridJogo9, gridJogo10, gridJogo11, gridJogo12, gridJogo13, gridJogo14, gridJogo15, gridJogo16, gridJogo17, gridJogo18, gridJogo19, gridJogo20, gridJogo21, gridJogo22, gridJogo23, gridJogo24, gridJogo25]
     return listaGridJogo

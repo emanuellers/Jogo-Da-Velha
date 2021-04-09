@@ -2,9 +2,24 @@
 backgroundColor = "white"
 fontTexto1 = "MS Reference Sans Serif Regular" #Fonte texto
 fontPressStart = "Press Start 2P Regular"#Fonte título
-corTema = [["Diurno", "#82ABA1", "#e8aeb7"], ["Outono", "#e76f51", "#264653"] , ["Escuro","black", "#fca311"]]
+activefpregroundButtons = "#f1faee"
+corButtonRobo ="#03045e"
+corButtonMenuInicial = "#a8dadc"
+fontWebdings = "Webdings"
+corTema = [["Diurno", "#b7d968", "#4c94ec"], ["Outono", "#7fd1b9", "#de6e4b"] , ["Escuro","black", "#fca311"]]
 highlightButtonCores = "#93ff96"
+jogoNomeCor = "#1d3557"
+botaoSairCor = "#e63946"
+titulosPartidas ="#457b9d"
+venceu = "#04724d"
+perdeu = "#ba1200"
+empatou = "#f4ac25"
 
+
+
+#Menu Incial
+padYJogoNome = 60
+padXJogoNome = 50
 
 #Medidas dos Elementos
 padYItens = 12 #padyItens da menu de configuração
@@ -22,8 +37,11 @@ widthSalvarConfiguracoes = 12
 widthPartidaButtons_3 = 3 #largura botões do jogo
 heightPartidaButtons_3= 1 #altura botões jogo
 
-widthLabelCriarJogo =  40
+widthLabelCriarJogo =  20
 heighLabelCriarJogo = 4
+
+widthButtonPagCriarJogo = 10
+heighButtonPagCriarJogo = 1
 
 
 #Posição dos blocos do jogo
@@ -44,3 +62,4 @@ oo = "(ˆ▿ˆc)"
 #Controle Externo de Pontos do Jogo
 partidas = 0
 pontuacao = 0
+pontuacaoR = 0
